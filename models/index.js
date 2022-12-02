@@ -8,16 +8,16 @@ Product.belongsTo(Category,{
   foreignKey:'category_id'
 });
 
-Category.hasMany(Products,{
+Category.hasMany(Product,{
   foreignKey:'category_id'
   });
 
-Product.belongToMany(Tags, {
+Product.belongsToMany(Tag, {
    through: ProductTag,
   foreignKey:'product_id'
   });
 
-Tag.belongToMany(Products, {
+Tag.belongsToMany(Product, {
   through: ProductTag,
   foreignKey:"tag_id"
 }); 
