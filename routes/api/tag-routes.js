@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
 router.get('/:id', (req, res) => {
   Tag.findOne({
     where: {id: req.params.id},
-  }).then((Tag) => {
-    res.json(Tag)
+  }).then((tag) => {
+    res.json(tag)
   })  
 });
 
