@@ -4,7 +4,9 @@ const { Category, Product } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
-    const categoryData = await Category.findAll()
+    const categoryData = await Category.findAll({
+      include: [Product]
+    })
      res.status(200).json(categoryData);
   } catch (err) {
     res.status(400).json(err);
@@ -14,25 +16,25 @@ router.get('/', async (req, res) => {
 router.get('/:id', (req, res) => {
   Category.findOne({
     where: {id: req.params.id},
+    include: [Product]
   }).then((Category) => {
     res.json(Category)
   }) 
 });
 
-router.post('/', async (req, res) => {
-  try {
-    const categoryDataa = await Category.create({
-      category_name: req.body.category_name
-    });
-    res.status(200).json(categoryData);
-  } catch (err) {
+router.post('/', (req, res) => {
+    Category.create(
+       req.body
+    ).then((categoryData) => {
+       res.status(200).json(categoryData);
+    })
+   .catch ((err) => {
     res.status(400).json(err);
-  }
-});
+})});
 
 router.put('/:id', (req, res) => {
-  Tag.update(
-    {category_name: req.body.category_name},
+  Category.update(
+    req.body,
     {where: {id: req.params.id}}
   ) 
   .then((categoryUpdated) => {
